@@ -3,11 +3,29 @@
 :root {
   --background: #ffffff;
   --foreground: #171717;
+  --primary: #00d1ff;
+  --primary-content: #ffffff;
+  --secondary: #10b981;
+  --secondary-content: #ffffff;
+  --tertiary: #feb127;
+  --natural: #0f172a;
+  --login-background: #f3f4f6;
+  --gradient-start-rgb: #00677f;
+  --gradient-end-rgb: #00d1ff;
 }
 
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
+  --color-primary: var(--primary);
+  --color-secondary: var(--secondary);
+  --color-tertiary: var(--tertiary);
+  --color-natural: var(--natural);
+  --color-login-background: var(--login-background);
+  --color-primary-content: var(--primary-content);
+  --color-secondary-content: var(--secondary-content);
+  --color-gradient-start-rgb: var(--gradient-start-rgb);
+  --color-gradient-end-rgb: var(--gradient-end-rgb);
   --font-sans: var(--font-geist-sans);
   --font-mono: var(--font-geist-mono);
 }
