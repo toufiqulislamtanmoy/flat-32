@@ -1,5 +1,6 @@
 "use client";
 import { Field, Form, Formik } from "formik";
+import { signIn } from "next-auth/react";
 import { useState } from "react";
 import * as Yup from "yup";
 const LoginSchema = Yup.object().shape({
@@ -9,6 +10,7 @@ const LoginSchema = Yup.object().shape({
 
 const LoginForm = () => {
   const [isPasswordVisible, setPasswordVisible] = useState(false);
+
   return (
     <div>
       <Formik
@@ -17,8 +19,8 @@ const LoginForm = () => {
           password: "",
         }}
         validationSchema={LoginSchema}
-        onSubmit={(values) => {
-          console.log(values);
+        onSubmit={async (values) => {
+          await signIn("credentials", values);
         }}
       >
         {({ errors, touched }) => (
