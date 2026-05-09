@@ -21,7 +21,6 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
         },
       },
       authorize: async (credentials) => {
-        console.log("credentials", credentials);
         const response = await fetch(`${process.env.NEXT_BACKEND_URL}/users/login`, {
           method: "POST",
           headers: {
@@ -31,17 +30,16 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
         });
 
         const user = await response.json();
-        console.log("user", user.data.Username);
 
         if (user?.status !== "failed") {
           return {
-            id: user.data.ID,
-            name: user.data.Fullname,
+            id: user?.data?.ID,
+            name: user?.data?.Fullname,
             email: JSON.stringify({
-              username: user.data.Username,
-              email: user.data.Email,
+              username: user?.data?.Username,
+              email: user?.data?.Email,
             }),
-            image: user.data.PhotoUrl || "https://cdn-icons-png.flaticon.com/512/149/149071.png",
+            image: user?.data?.PhotoUrl || "https://cdn-icons-png.flaticon.com/512/149/149071.png",
           };
         } else {
           return null;
@@ -56,7 +54,7 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
   callbacks: {
     async session({ session, token }) {
       if (session.user) {
-        session.user.id = token.id;
+        session.user.id = token.id as string;
       }
       return session;
     },
@@ -71,12 +69,6 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
         return new URL(url).origin;
       }
       return url;
-    },
-    async authorized({ auth, request }) {
-      const isLoggedIn = !!auth?.user;
-      const isUnAuthorized = !isLoggedIn;
-
-      return !isUnAuthorized;
     },
   },
 });
