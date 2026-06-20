@@ -65,7 +65,7 @@ const LoginForm = () => {
 
             <button
               type="submit"
-              className="w-full h-12 rounded-full cursor-pointer bg-gradient-to-r from-gradient-start-rgb  to-gradient-end-rgb text-white font-semibold hover:opacity-90 transition"
+              className="w-full h-12 rounded-full cursor-pointer bg-linear-to-r from-gradient-start-rgb  to-gradient-end-rgb text-white font-semibold hover:opacity-90 transition"
             >
               Sign In
             </button>

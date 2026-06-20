@@ -21,25 +21,29 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
         },
       },
       authorize: async (credentials) => {
-        const response = await fetch(`${process.env.NEXT_BACKEND_URL}/users/login`, {
+        const { email: email_address, password } = credentials as {
+          email: string;
+          password: string;
+        };
+        const response = await fetch(`${process.env.NEXT_BACKEND_URL}/auth/users/login`, {
           method: "POST",
           headers: {
             "Content-Type": "application/json",
           },
-          body: JSON.stringify(credentials),
+          body: JSON.stringify({ email_address, password }),
         });
 
         const user = await response.json();
 
         if (user?.status !== "failed") {
           return {
-            id: user?.data?.ID,
-            name: user?.data?.Fullname,
+            id: user?.data?.id,
+            name: user?.data?.fullname,
             email: JSON.stringify({
-              username: user?.data?.Username,
-              email: user?.data?.Email,
+              username: user?.data?.username,
+              email: user?.data?.email_address,
             }),
-            image: user?.data?.PhotoUrl || "https://cdn-icons-png.flaticon.com/512/149/149071.png",
+            image: user?.data?.photo_url || "https://cdn-icons-png.flaticon.com/512/149/149071.png",
           };
         } else {
           return null;
