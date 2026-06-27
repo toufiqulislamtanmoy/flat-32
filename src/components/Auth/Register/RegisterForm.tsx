@@ -1,5 +1,6 @@
 "use client";
 
+import axiosClient from "@/helper/axiosClient";
 import { Field, Form, Formik } from "formik";
 import { signIn } from "next-auth/react";
 import { useState } from "react";
@@ -40,30 +41,15 @@ const RegisterForm = () => {
         onSubmit={async (values, { resetForm }) => {
           try {
             const { confirmPassword, ...payload } = values;
-
-            console.log(payload);
-
-            const response = await fetch(
-              `${process.env.NEXT_PUBLIC_BACKEND_URL}/auth/users/register`,
-              {
-                method: "POST",
-                headers: {
-                  "Content-Type": "application/json",
-                },
-                body: JSON.stringify(payload),
-              }
-            );
-            const data = await response.json();
-            console.log("this is data-->", data);
-
-            if (data?.status === "success") {
+            const data = await axiosClient.post("/auth/users/register", payload);
+            if (data?.data?.status === "success") {
               signIn("credentials", {
                 email: payload.email_address,
                 password: payload.password,
               });
               resetForm();
             } else {
-              alert(data?.message);
+              alert(data?.data?.message);
             }
           } catch (error) {
             console.log(error);
