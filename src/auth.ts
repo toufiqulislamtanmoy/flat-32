@@ -26,18 +26,22 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
           email: string;
           password: string;
         };
-        const user = await axiosClient.post("/auth/users/login", {
-          email_address,
-          password,
+        const response = await fetch(process.env.NEXT_PUBLIC_BACKEND_URL + "/auth/users/login", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({ email_address, password }),
         });
+        const user = await response.json();
 
-        if (user?.data?.status !== "failed") {
+        if (user?.status !== "failed") {
           return {
-            id: user?.data?.data?.id,
-            name: user?.data?.data?.fullname,
+            id: user?.data?.id,
+            name: user?.data?.fullname,
             email: JSON.stringify({
-              username: user?.data?.data?.username,
-              email: user?.data?.data?.email_address,
+              username: user?.data?.username,
+              email: user?.data?.email_address,
             }),
             image: user?.data?.photo_url || "https://cdn-icons-png.flaticon.com/512/149/149071.png",
           };
