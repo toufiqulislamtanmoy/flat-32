@@ -37,7 +37,7 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
 
         if (user?.status !== "failed") {
           return {
-            id: user?.data?.id,
+            id: user?.data?.user_id,
             name: user?.data?.fullname,
             email: JSON.stringify({
               username: user?.data?.username,
