@@ -1,4 +1,6 @@
 "use client";
+
+import { useAlert } from "@/components/AlertPopUp/AlertPopup";
 import { Field, Form, Formik } from "formik";
 import { signIn } from "next-auth/react";
 import { useState } from "react";
@@ -10,6 +12,7 @@ const LoginSchema = Yup.object().shape({
 
 const LoginForm = () => {
   const [isPasswordVisible, setPasswordVisible] = useState(false);
+  const { showMessage } = useAlert();
 
   return (
     <div>
@@ -19,11 +22,33 @@ const LoginForm = () => {
           password: "",
         }}
         validationSchema={LoginSchema}
-        onSubmit={async (values) => {
-          await signIn("credentials", values);
+        onSubmit={async (values, { setSubmitting }) => {
+          setSubmitting(true);
+
+          try {
+            const response = await signIn("credentials", {
+              redirect: false,
+              email: values.email,
+              password: values.password,
+            });
+
+            if (response?.error) {
+              showMessage(
+                "error",
+                "Sign in failed",
+                "Please check your credentials and try again."
+              );
+            } else {
+              showMessage("success", "Welcome back", "You are now signed in.");
+            }
+          } catch {
+            showMessage("error", "Sign in failed", "Something went wrong. Please try again.");
+          } finally {
+            setSubmitting(false);
+          }
         }}
       >
-        {({ errors, touched }) => (
+        {({ errors, touched, isSubmitting }) => (
           <Form className="space-y-4">
             <div>
               <label className="text-sm font-medium text-gray-700 block mb-2">Email</label>
@@ -65,9 +90,10 @@ const LoginForm = () => {
 
             <button
               type="submit"
-              className="w-full h-12 rounded-full cursor-pointer bg-linear-to-r from-gradient-start-rgb  to-gradient-end-rgb text-white font-semibold hover:opacity-90 transition"
+              disabled={isSubmitting}
+              className="w-full h-12 rounded-full cursor-pointer bg-linear-to-r from-gradient-start-rgb to-gradient-end-rgb text-white font-semibold transition hover:opacity-90 disabled:cursor-not-allowed disabled:opacity-70"
             >
-              Sign In
+              {isSubmitting ? "Signing in..." : "Sign In"}
             </button>
           </Form>
         )}

@@ -5,7 +5,7 @@ import { usePathname } from "next/navigation";
 import { useState } from "react";
 
 const links = [
-  { name: "Dashboard", href: "/main", icon: "◉" },
+  { name: "Dashboard", href: "/", icon: "◉" },
   { name: "Projects", href: "/main/projects", icon: "▣" },
   { name: "Analytics", href: "/main/analytics", icon: "◌" },
   { name: "Settings", href: "/main/settings", icon: "⚙" },

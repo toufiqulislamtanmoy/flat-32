@@ -1,5 +1,6 @@
 "use client";
 
+import { useAlert } from "@/components/AlertPopUp/AlertPopup";
 import axiosClient from "@/helper/axiosClient";
 import { Field, Form, Formik } from "formik";
 import { signIn } from "next-auth/react";
@@ -26,6 +27,7 @@ const RegisterSchema = Yup.object().shape({
 
 const RegisterForm = () => {
   const [isPasswordVisible, setPasswordVisible] = useState(false);
+  const { showMessage } = useAlert();
 
   return (
     <div>
@@ -38,25 +40,41 @@ const RegisterForm = () => {
           confirmPassword: "",
         }}
         validationSchema={RegisterSchema}
-        onSubmit={async (values, { resetForm }) => {
+        onSubmit={async (values, { resetForm, setSubmitting }) => {
+          setSubmitting(true);
+
           try {
             const { confirmPassword, ...payload } = values;
             const data = await axiosClient.post("/auth/users/register", payload);
+
             if (data?.data?.status === "success") {
-              signIn("credentials", {
+              await signIn("credentials", {
+                redirect: false,
                 email: payload.email_address,
                 password: payload.password,
               });
+              showMessage("success", "Account created", "Your account is ready to use.");
               resetForm();
             } else {
-              alert(data?.data?.message);
+              showMessage(
+                "warning",
+                "Registration issue",
+                data?.data?.message || "Please try again."
+              );
             }
           } catch (error) {
             console.log(error);
+            showMessage(
+              "error",
+              "Registration failed",
+              "We couldn't create your account. Please try again."
+            );
+          } finally {
+            setSubmitting(false);
           }
         }}
       >
-        {({ errors, touched }) => (
+        {({ errors, touched, isSubmitting }) => (
           <Form className="space-y-4">
             {/* Username */}
             <div>
