@@ -2,98 +2,146 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { useState } from "react";
+import {
+  LayoutDashboard,
+  Plus,
+  Settings,
+  X,
+  Home,
+  UtensilsCrossed,
+  Plane,
+} from "lucide-react";
+import { Button } from "@/components/ui/button";
+import { plansData } from "@/components/home/mock-data";
 
-const links = [
-  { name: "Dashboard", href: "/", icon: "◉" },
-  { name: "Projects", href: "/main/projects", icon: "▣" },
-  { name: "Analytics", href: "/main/analytics", icon: "◌" },
-  { name: "Settings", href: "/main/settings", icon: "⚙" },
-];
+interface SidebarProps {
+  isOpen: boolean;
+  onClose: () => void;
+}
 
-const Sidebar = () => {
+const Sidebar = ({ isOpen, onClose }: SidebarProps) => {
   const pathname = usePathname();
-  const [isOpen, setIsOpen] = useState(false);
+
+  const planIcons: Record<number, typeof Home> = {
+    1: Home,
+    2: UtensilsCrossed,
+    3: Plane,
+  };
+
+  const navItems = [
+    { name: "Dashboard", href: "/", icon: LayoutDashboard },
+  ];
 
   return (
     <>
-      <button
-        type="button"
-        onClick={() => setIsOpen(true)}
-        className="fixed left-4 top-24 z-40 rounded-full border border-gray-200 bg-white p-2 text-natural shadow-sm lg:hidden"
-        aria-label="Open sidebar"
-      >
-        <svg className="h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-          <path
-            strokeLinecap="round"
-            strokeLinejoin="round"
-            strokeWidth={2}
-            d="M4 6h16M4 12h16M4 18h16"
-          />
-        </svg>
-      </button>
-
+      {/* Mobile backdrop */}
       {isOpen && (
-        <button
-          type="button"
-          aria-label="Close sidebar"
-          onClick={() => setIsOpen(false)}
-          className="fixed inset-0 z-30 bg-natural/40 lg:hidden"
+        <div
+          className="fixed inset-0 z-40 bg-natural/40 backdrop-blur-sm lg:hidden"
+          onClick={onClose}
+          aria-hidden="true"
         />
       )}
 
+      {/* Sidebar */}
       <aside
-        className={`fixed inset-y-0 left-0 z-40 flex w-72 flex-col border-r border-gray-200 bg-white shadow-xl transition-transform duration-300 lg:static lg:w-64 lg:translate-x-0 lg:shadow-none min-h-screen h-full ${
-          isOpen ? "translate-x-0" : "-translate-x-full lg:translate-x-0"
+        className={`fixed inset-y-0 left-0 z-50 flex w-64 flex-col border-r border-border bg-white transition-transform duration-200 lg:sticky lg:top-16 lg:h-[calc(100vh-4rem)] lg:translate-x-0 ${
+          isOpen ? "translate-x-0" : "-translate-x-full"
         }`}
       >
-        <div className="flex items-center justify-between border-b border-gray-200 px-5 py-5">
-          <div className="flex items-center gap-3">
-            <div className="flex h-10 w-10 items-center justify-center rounded-full bg-primary text-lg font-bold text-primary-content">
-              F
-            </div>
-            <div>
-              <p className="text-sm font-semibold text-natural">Flat32</p>
-              <p className="text-xs text-gray-500">Admin Panel</p>
-            </div>
-          </div>
+        {/* Header: Logo (mobile only — desktop uses Navbar logo) */}
+        <div className="flex items-center justify-between border-b border-border px-5 py-4 lg:hidden">
+          <span className="text-lg font-bold text-natural">Flat Mate</span>
           <button
             type="button"
-            onClick={() => setIsOpen(false)}
-            className="rounded-full p-2 text-natural hover:bg-login-background lg:hidden"
+            onClick={onClose}
+            className="inline-flex items-center justify-center rounded-lg p-2 text-natural hover:bg-login-background hover:text-primary transition-colors cursor-pointer"
             aria-label="Close sidebar"
           >
-            <svg className="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                strokeWidth={2}
-                d="M6 18L18 6M6 6l12 12"
-              />
-            </svg>
+            <X className="h-5 w-5" />
           </button>
         </div>
 
-        <nav className="flex-1 space-y-2 px-3 py-4">
-          {links.map((link) => {
-            const isActive = pathname === link.href;
-            return (
+        {/* Navigation */}
+        <nav className="flex-1 overflow-y-auto px-3 py-4">
+          {/* Main section */}
+          <div className="space-y-1">
+            {navItems.map((item) => {
+              const isActive = pathname === item.href;
+              return (
+                <Link
+                  key={item.href}
+                  href={item.href}
+                  onClick={onClose}
+                  className={`flex items-center gap-3 rounded-xl px-3 py-2.5 text-sm font-medium transition-colors ${
+                    isActive
+                      ? "bg-primary text-primary-foreground"
+                      : "text-natural hover:bg-login-background hover:text-primary"
+                  }`}
+                >
+                  <item.icon className="h-5 w-5 shrink-0" />
+                  {item.name}
+                </Link>
+              );
+            })}
+          </div>
+
+          {/* Plans section */}
+          <div className="mt-6">
+            <p className="mb-2 px-3 text-[11px] font-semibold uppercase tracking-wider text-muted-foreground">
+              My Plans
+            </p>
+            <div className="space-y-1">
+              {plansData.map((plan) => {
+                const isActive = pathname === `/plans/${plan.id}`;
+                const PlanIcon = planIcons[plan.id] || Home;
+                return (
+                  <Link
+                    key={plan.id}
+                    href={`/plans/${plan.id}`}
+                    onClick={onClose}
+                    className={`flex items-center gap-3 rounded-xl px-3 py-2.5 text-sm font-medium transition-colors ${
+                      isActive
+                        ? "bg-primary text-primary-foreground"
+                        : "text-natural hover:bg-login-background hover:text-primary"
+                    }`}
+                  >
+                    <PlanIcon className="h-5 w-5 shrink-0" />
+                    <span className="truncate">{plan.name}</span>
+                  </Link>
+                );
+              })}
+            </div>
+
+            {/* Create Plan */}
+            <div className="mt-1">
               <Link
-                key={link.href}
-                href={link.href}
-                onClick={() => setIsOpen(false)}
-                className={`flex items-center gap-3 rounded-xl px-3 py-3 text-sm font-medium transition ${
-                  isActive
-                    ? "bg-primary text-primary-content shadow-sm"
-                    : "text-natural hover:bg-login-background hover:text-primary"
-                }`}
+                href="/plans/create"
+                onClick={onClose}
+                className="flex items-center gap-3 rounded-xl px-3 py-2.5 text-sm font-medium text-muted-foreground hover:bg-login-background hover:text-primary transition-colors"
               >
-                <span className="text-base">{link.icon}</span>
-                {link.name}
+                <Plus className="h-5 w-5 shrink-0" />
+                Create Plan
               </Link>
-            );
-          })}
+            </div>
+          </div>
         </nav>
+
+        {/* Footer: Settings */}
+        <div className="border-t border-border px-3 py-3">
+          <Link
+            href="/settings"
+            onClick={onClose}
+            className={`flex items-center gap-3 rounded-xl px-3 py-2.5 text-sm font-medium transition-colors ${
+              pathname === "/settings"
+                ? "bg-primary text-primary-foreground"
+                : "text-natural hover:bg-login-background hover:text-primary"
+            }`}
+          >
+            <Settings className="h-5 w-5 shrink-0" />
+            Settings
+          </Link>
+        </div>
       </aside>
     </>
   );
