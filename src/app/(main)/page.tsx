@@ -5,11 +5,8 @@ import PlanCard from "@/components/home/PlanCard";
 import QuickActionButton from "@/components/home/QuickActionButton";
 import RecentActivityItem from "@/components/home/RecentActivityItem";
 import EmptyState from "@/components/home/EmptyState";
-import {
-  summaryData,
-  plansData,
-  recentActivities,
-} from "@/components/home/mock-data";
+import { summaryData, plansData, recentActivities } from "@/components/home/mock-data";
+import Link from "next/link";
 
 export default function MainPage() {
   const hasPlans = plansData.length > 0;
@@ -29,18 +26,15 @@ export default function MainPage() {
       {/* Summary Cards */}
       <section className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-4">
         {summaryData.map((stat) => (
-          <SummaryCard
-            key={stat.label}
-            value={stat.value}
-            label={stat.label}
-            icon={stat.icon}
-          />
+          <SummaryCard key={stat.label} value={stat.value} label={stat.label} icon={stat.icon} />
         ))}
       </section>
 
       {/* Quick Actions */}
       <section className="flex flex-wrap gap-3">
-        <QuickActionButton label="+ Create Plan" />
+        <Link href={"/plans/create"}>
+          <QuickActionButton label="+ Create Plan" />
+        </Link>
         <QuickActionButton label="+ Join Plan" />
         <QuickActionButton label="View Reports" />
       </section>
@@ -65,9 +59,7 @@ export default function MainPage() {
 
       {/* Recent Activity */}
       <section>
-        <h2 className="mb-4 text-lg font-semibold text-natural">
-          Recent Activity
-        </h2>
+        <h2 className="mb-4 text-lg font-semibold text-natural">Recent Activity</h2>
         <div className="rounded-2xl border border-border bg-white p-4 shadow-sm">
           <div className="space-y-4">
             {recentActivities.map((activity) => (
