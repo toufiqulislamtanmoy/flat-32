@@ -1,20 +1,85 @@
 "use client";
 
-import PlanList from "@/components/PlanList/Index";
+import SummaryCard from "@/components/home/SummaryCard";
+import PlanCard from "@/components/home/PlanCard";
+import QuickActionButton from "@/components/home/QuickActionButton";
+import RecentActivityItem from "@/components/home/RecentActivityItem";
+import EmptyState from "@/components/home/EmptyState";
+import {
+  summaryData,
+  plansData,
+  recentActivities,
+} from "@/components/home/mock-data";
 
-const MainPage = () => {
-  // const {data}  =
+export default function MainPage() {
+  const hasPlans = plansData.length > 0;
+
   return (
-    <div className="rounded-2xl border border-gray-200 bg-white p-6 shadow-sm">
-      <p className="text-sm font-semibold uppercase tracking-wide text-primary">Overview</p>
-      <h1 className="mt-2 text-2xl font-bold text-natural">Welcome back</h1>
-      <p className="mt-3 max-w-2xl text-sm text-gray-600">
-        This is your responsive dashboard area with a sidebar that matches your existing color
-        theme.
-      </p>
-      <PlanList />
+    <div className="space-y-8">
+      {/* Welcome Section */}
+      <section>
+        <h1 className="text-2xl font-bold text-natural">Welcome Back 👋</h1>
+        <p className="mt-1 text-sm text-muted-foreground">
+          {hasPlans
+            ? "Manage your shared expenses with complete transparency."
+            : "Create your first plan to start tracking shared expenses."}
+        </p>
+      </section>
+
+      {/* Summary Cards */}
+      <section className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-4">
+        {summaryData.map((stat) => (
+          <SummaryCard
+            key={stat.label}
+            value={stat.value}
+            label={stat.label}
+            icon={stat.icon}
+          />
+        ))}
+      </section>
+
+      {/* Quick Actions */}
+      <section className="flex flex-wrap gap-3">
+        <QuickActionButton label="+ Create Plan" />
+        <QuickActionButton label="+ Join Plan" />
+        <QuickActionButton label="View Reports" />
+      </section>
+
+      {/* My Plans */}
+      <section>
+        <h2 className="mb-4 text-lg font-semibold text-natural">My Plans</h2>
+        {hasPlans ? (
+          <div className="grid grid-cols-1 gap-4 md:grid-cols-2 xl:grid-cols-3">
+            {plansData.map((plan) => (
+              <PlanCard key={plan.id} plan={plan} />
+            ))}
+          </div>
+        ) : (
+          <EmptyState
+            title="No Plans Available"
+            description="Create your first plan to start managing shared expenses."
+            actionLabel="Create Plan"
+          />
+        )}
+      </section>
+
+      {/* Recent Activity */}
+      <section>
+        <h2 className="mb-4 text-lg font-semibold text-natural">
+          Recent Activity
+        </h2>
+        <div className="rounded-2xl border border-border bg-white p-4 shadow-sm">
+          <div className="space-y-4">
+            {recentActivities.map((activity) => (
+              <RecentActivityItem
+                key={activity.id}
+                description={activity.description}
+                timestamp={activity.timestamp}
+              />
+            ))}
+          </div>
+        </div>
+      </section>
     </div>
   );
-};
-
-export default MainPage;
+}
