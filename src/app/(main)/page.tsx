@@ -1,11 +1,12 @@
 "use client";
 
-import SummaryCard from "@/components/home/SummaryCard";
+import EmptyState from "@/components/home/EmptyState";
+import { plansData, recentActivities } from "@/components/home/mock-data";
 import PlanCard from "@/components/home/PlanCard";
 import QuickActionButton from "@/components/home/QuickActionButton";
 import RecentActivityItem from "@/components/home/RecentActivityItem";
-import EmptyState from "@/components/home/EmptyState";
-import { summaryData, plansData, recentActivities } from "@/components/home/mock-data";
+import Summary from "@/components/home/Summary";
+
 import Link from "next/link";
 
 export default function MainPage() {
@@ -24,11 +25,12 @@ export default function MainPage() {
       </section>
 
       {/* Summary Cards */}
-      <section className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-4">
+      <Summary />
+      {/* <section className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-4">
         {summaryData.map((stat) => (
           <SummaryCard key={stat.label} value={stat.value} label={stat.label} icon={stat.icon} />
         ))}
-      </section>
+      </section> */}
 
       {/* Quick Actions */}
       <section className="flex flex-wrap gap-3">
