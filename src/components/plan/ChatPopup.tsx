@@ -11,12 +11,7 @@ interface ChatPopupProps {
   onClose: () => void;
 }
 
-export default function ChatPopup({
-  planName,
-  onlineCount,
-  messages,
-  onClose,
-}: ChatPopupProps) {
+export default function ChatPopup({ planName, onlineCount, messages, onClose }: ChatPopupProps) {
   const [inputValue, setInputValue] = useState("");
 
   return (
@@ -26,12 +21,8 @@ export default function ChatPopup({
         {/* Header */}
         <div className="flex items-center justify-between rounded-t-2xl bg-primary px-4 py-3">
           <div>
-            <p className="text-sm font-semibold text-primary-foreground">
-              {planName}
-            </p>
-            <p className="text-xs text-primary-foreground/80">
-              {onlineCount} online
-            </p>
+            <p className="text-sm font-semibold text-primary-foreground">{planName}</p>
+            <p className="text-xs text-primary-foreground/80">{onlineCount} online</p>
           </div>
           <div className="flex gap-2">
             <button
@@ -60,12 +51,7 @@ export default function ChatPopup({
             >
               {!msg.isOwn && (
                 <div className="relative h-7 w-7 shrink-0 overflow-hidden rounded-full">
-                  <Image
-                    src={msg.avatar}
-                    alt={msg.sender}
-                    fill
-                    className="object-cover"
-                  />
+                  <Image src={msg.avatar} alt={msg.sender} fill className="object-cover" />
                 </div>
               )}
               <div
@@ -76,16 +62,12 @@ export default function ChatPopup({
                 }`}
               >
                 {!msg.isOwn && (
-                  <p className="mb-0.5 text-[11px] font-semibold text-primary">
-                    {msg.sender}
-                  </p>
+                  <p className="mb-0.5 text-[11px] font-semibold text-primary">{msg.sender}</p>
                 )}
                 <p className="text-sm">{msg.message}</p>
                 <p
                   className={`mt-1 text-[10px] ${
-                    msg.isOwn
-                      ? "text-primary-foreground/70"
-                      : "text-muted-foreground"
+                    msg.isOwn ? "text-primary-foreground/70" : "text-muted-foreground"
                   }`}
                 >
                   {msg.timestamp}
@@ -118,12 +100,8 @@ export default function ChatPopup({
         {/* Header */}
         <div className="flex items-center justify-between rounded-t-2xl bg-primary px-4 py-3">
           <div>
-            <p className="text-sm font-semibold text-primary-foreground">
-              {planName}
-            </p>
-            <p className="text-xs text-primary-foreground/80">
-              {onlineCount} online
-            </p>
+            <p className="text-sm font-semibold text-primary-foreground">{planName}</p>
+            <p className="text-xs text-primary-foreground/80">{onlineCount} online</p>
           </div>
           <button
             type="button"
@@ -143,12 +121,7 @@ export default function ChatPopup({
             >
               {!msg.isOwn && (
                 <div className="relative h-7 w-7 shrink-0 overflow-hidden rounded-full">
-                  <Image
-                    src={msg.avatar}
-                    alt={msg.sender}
-                    fill
-                    className="object-cover"
-                  />
+                  <Image src={msg.avatar} alt={msg.sender} fill className="object-cover" />
                 </div>
               )}
               <div
@@ -159,16 +132,12 @@ export default function ChatPopup({
                 }`}
               >
                 {!msg.isOwn && (
-                  <p className="mb-0.5 text-[11px] font-semibold text-primary">
-                    {msg.sender}
-                  </p>
+                  <p className="mb-0.5 text-[11px] font-semibold text-primary">{msg.sender}</p>
                 )}
                 <p className="text-sm">{msg.message}</p>
                 <p
                   className={`mt-1 text-[10px] ${
-                    msg.isOwn
-                      ? "text-primary-foreground/70"
-                      : "text-muted-foreground"
+                    msg.isOwn ? "text-primary-foreground/70" : "text-muted-foreground"
                   }`}
                 >
                   {msg.timestamp}

@@ -5,9 +5,7 @@ export default function InformationCard() {
   return (
     <Card className="shadow-sm">
       <CardHeader>
-        <CardTitle className="text-base font-semibold text-natural">
-          What happens next?
-        </CardTitle>
+        <CardTitle className="text-base font-semibold text-natural">What happens next?</CardTitle>
       </CardHeader>
       <CardContent>
         <ul className="space-y-2.5">

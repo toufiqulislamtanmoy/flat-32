@@ -5,10 +5,7 @@ interface FloatingChatButtonProps {
   onClick: () => void;
 }
 
-export default function FloatingChatButton({
-  unreadCount,
-  onClick,
-}: FloatingChatButtonProps) {
+export default function FloatingChatButton({ unreadCount, onClick }: FloatingChatButtonProps) {
   return (
     <button
       type="button"

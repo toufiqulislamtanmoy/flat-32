@@ -14,9 +14,7 @@ export default function EmptyState({ title, description, icon }: EmptyStateProps
           {icon}
         </div>
         <h3 className="text-base font-semibold text-natural">{title}</h3>
-        <p className="mt-2 max-w-xs text-sm text-muted-foreground">
-          {description}
-        </p>
+        <p className="mt-2 max-w-xs text-sm text-muted-foreground">{description}</p>
       </CardContent>
     </Card>
   );

@@ -63,6 +63,7 @@ src/
 ## Design Tokens (globals.css)
 
 Custom theme — use these Tailwind classes:
+
 - `text-natural` (#0f172a) — headings
 - `bg-primary` (#00d1ff) — brand cyan
 - `bg-secondary` (#10b981) — emerald green

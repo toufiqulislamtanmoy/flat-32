@@ -2,15 +2,7 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import {
-  LayoutDashboard,
-  Plus,
-  Settings,
-  X,
-  Home,
-  UtensilsCrossed,
-  Plane,
-} from "lucide-react";
+import { LayoutDashboard, Plus, Settings, X, Home, UtensilsCrossed, Plane } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { plansData } from "@/components/home/mock-data";
 
@@ -28,9 +20,7 @@ const Sidebar = ({ isOpen, onClose }: SidebarProps) => {
     3: Plane,
   };
 
-  const navItems = [
-    { name: "Dashboard", href: "/", icon: LayoutDashboard },
-  ];
+  const navItems = [{ name: "Dashboard", href: "/", icon: LayoutDashboard }];
 
   return (
     <>

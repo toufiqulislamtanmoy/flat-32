@@ -7,10 +7,7 @@ interface QuickActionButtonProps {
   icon?: React.ReactNode;
 }
 
-export default function QuickActionButton({
-  label,
-  icon,
-}: QuickActionButtonProps) {
+export default function QuickActionButton({ label, icon }: QuickActionButtonProps) {
   return (
     <Button variant="outline" className="gap-2">
       {icon}

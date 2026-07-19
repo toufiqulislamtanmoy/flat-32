@@ -14,9 +14,7 @@ export default function MembersPreview({ members }: MembersPreviewProps) {
     <Card className="shadow-sm">
       <CardHeader>
         <div className="flex items-center justify-between">
-          <CardTitle className="text-base font-semibold text-natural">
-            Members
-          </CardTitle>
+          <CardTitle className="text-base font-semibold text-natural">Members</CardTitle>
           <Button variant="ghost" size="sm">
             View All Members
           </Button>
@@ -29,9 +27,7 @@ export default function MembersPreview({ members }: MembersPreviewProps) {
               \ud83d\udc65
             </div>
             <p className="text-sm font-semibold text-natural">No Members</p>
-            <p className="mt-1 text-xs text-muted-foreground">
-              Invite members to join this plan.
-            </p>
+            <p className="mt-1 text-xs text-muted-foreground">Invite members to join this plan.</p>
           </div>
         ) : (
           <div className="space-y-3">
@@ -41,20 +37,11 @@ export default function MembersPreview({ members }: MembersPreviewProps) {
                 className="flex items-center gap-3 rounded-lg border border-border p-3"
               >
                 <div className="relative h-10 w-10 shrink-0 overflow-hidden rounded-full">
-                  <Image
-                    src={member.avatar}
-                    alt={member.name}
-                    fill
-                    className="object-cover"
-                  />
+                  <Image src={member.avatar} alt={member.name} fill className="object-cover" />
                 </div>
                 <div className="flex-1 min-w-0">
-                  <p className="text-sm font-medium text-natural">
-                    {member.name}
-                  </p>
-                  <p className="text-xs text-muted-foreground">
-                    {member.permission}
-                  </p>
+                  <p className="text-sm font-medium text-natural">{member.name}</p>
+                  <p className="text-xs text-muted-foreground">{member.permission}</p>
                 </div>
                 <span
                   className={`inline-flex items-center rounded-full px-2 py-0.5 text-xs font-medium ${

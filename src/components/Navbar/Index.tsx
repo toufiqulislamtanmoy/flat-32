@@ -5,14 +5,7 @@ import { signOut } from "next-auth/react";
 import Image from "next/image";
 import Link from "next/link";
 import { useState, useRef, useEffect, useCallback } from "react";
-import {
-  LayoutDashboard,
-  Search,
-  Bell,
-  Menu,
-  LogOut,
-  ChevronDown,
-} from "lucide-react";
+import { LayoutDashboard, Search, Bell, Menu, LogOut, ChevronDown } from "lucide-react";
 import { Button } from "@/components/ui/button";
 
 interface NavbarProps {
@@ -44,12 +37,9 @@ const Navbar = ({ onMenuToggle }: NavbarProps) => {
     setIsProfileOpen(false);
   };
 
-  const handleKeyDown = useCallback(
-    (e: KeyboardEvent) => {
-      if (e.key === "Escape") setIsProfileOpen(false);
-    },
-    []
-  );
+  const handleKeyDown = useCallback((e: KeyboardEvent) => {
+    if (e.key === "Escape") setIsProfileOpen(false);
+  }, []);
 
   useEffect(() => {
     document.addEventListener("keydown", handleKeyDown);
@@ -87,9 +77,7 @@ const Navbar = ({ onMenuToggle }: NavbarProps) => {
             <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-primary">
               <LayoutDashboard className="h-4 w-4 text-primary-foreground" />
             </div>
-            <span className="text-lg font-bold text-natural hidden sm:inline">
-              Flat Mate
-            </span>
+            <span className="text-lg font-bold text-natural hidden sm:inline">Flat Mate</span>
           </Link>
         </div>
 
@@ -168,9 +156,7 @@ const Navbar = ({ onMenuToggle }: NavbarProps) => {
                       <p className="text-sm font-semibold text-natural truncate">
                         {user_data?.user?.name || "User Name"}
                       </p>
-                      <p className="text-xs text-muted-foreground truncate">
-                        {getUserEmail()}
-                      </p>
+                      <p className="text-xs text-muted-foreground truncate">{getUserEmail()}</p>
                     </div>
                   </div>
                 </div>

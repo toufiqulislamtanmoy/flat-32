@@ -4,6 +4,8 @@ import "./globals.css";
 import AuthProviders from "@/providers/AuthProviders";
 import QueryClientProviderLocal from "@/provider/QueryClientProviderLocal";
 import { AlertProvider } from "@/components/AlertPopUp/AlertPopup";
+import { ModalProvider } from "@/components/shared/modal";
+import GlobalModal from "@/components/shared/modal/GlobalModal";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -30,7 +32,12 @@ export default function RootLayout({
       <body className="min-h-full flex flex-col">
         <AuthProviders>
           <QueryClientProviderLocal>
-            <AlertProvider>{children}</AlertProvider>
+            <AlertProvider>
+              <ModalProvider>
+                {children}
+                <GlobalModal />
+              </ModalProvider>
+            </AlertProvider>
           </QueryClientProviderLocal>
         </AuthProviders>
       </body>

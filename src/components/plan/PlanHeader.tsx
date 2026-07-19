@@ -15,9 +15,7 @@ export default function PlanHeader({ plan }: PlanHeaderProps) {
           </div>
           <div>
             <h1 className="text-xl font-bold text-natural">{plan.name}</h1>
-            <p className="mt-1 text-sm text-muted-foreground">
-              {plan.description}
-            </p>
+            <p className="mt-1 text-sm text-muted-foreground">{plan.description}</p>
             <div className="mt-2 flex flex-wrap items-center gap-3 text-xs text-muted-foreground">
               <span>Owner: {plan.owner}</span>
               <span className="h-1 w-1 rounded-full bg-border" />
@@ -29,9 +27,7 @@ export default function PlanHeader({ plan }: PlanHeaderProps) {
         </div>
         <div className="rounded-xl bg-login-background px-4 py-3 text-center sm:text-right">
           <p className="text-xs text-muted-foreground">Current Balance</p>
-          <p className="mt-0.5 text-2xl font-bold text-natural">
-            {plan.balance}
-          </p>
+          <p className="mt-0.5 text-2xl font-bold text-natural">{plan.balance}</p>
         </div>
       </CardContent>
     </Card>

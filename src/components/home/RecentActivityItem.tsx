@@ -3,10 +3,7 @@ interface RecentActivityItemProps {
   timestamp: string;
 }
 
-export default function RecentActivityItem({
-  description,
-  timestamp,
-}: RecentActivityItemProps) {
+export default function RecentActivityItem({ description, timestamp }: RecentActivityItemProps) {
   return (
     <div className="flex items-start gap-3">
       <div className="mt-1.5 h-2.5 w-2.5 shrink-0 rounded-full bg-primary" />

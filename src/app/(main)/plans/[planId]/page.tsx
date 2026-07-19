@@ -40,10 +40,7 @@ export default function PlanDetailsPage() {
 
       <ActivityTimeline activities={activities} />
 
-      <FloatingChatButton
-        unreadCount={3}
-        onClick={() => setIsChatOpen((prev) => !prev)}
-      />
+      <FloatingChatButton unreadCount={3} onClick={() => setIsChatOpen((prev) => !prev)} />
 
       {isChatOpen && (
         <ChatPopup

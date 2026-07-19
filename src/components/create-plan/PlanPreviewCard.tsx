@@ -20,9 +20,7 @@ export default function PlanPreviewCard({
   return (
     <Card className="shadow-sm">
       <CardHeader>
-        <CardTitle className="text-base font-semibold text-natural">
-          Preview
-        </CardTitle>
+        <CardTitle className="text-base font-semibold text-natural">Preview</CardTitle>
       </CardHeader>
       <CardContent>
         <div className="flex items-center gap-3 mb-4">

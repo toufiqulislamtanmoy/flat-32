@@ -12,9 +12,7 @@ export default function PlanForm({ selectedIcon, onIconSelect }: PlanFormProps) 
   return (
     <Card className="shadow-sm">
       <CardHeader>
-        <CardTitle className="text-base font-semibold text-natural">
-          Plan Details
-        </CardTitle>
+        <CardTitle className="text-base font-semibold text-natural">Plan Details</CardTitle>
       </CardHeader>
       <CardContent className="space-y-5">
         {/* Plan Name */}
@@ -31,9 +29,7 @@ export default function PlanForm({ selectedIcon, onIconSelect }: PlanFormProps) 
 
         {/* Description */}
         <div>
-          <label className="text-sm font-medium text-gray-700 block mb-2">
-            Description
-          </label>
+          <label className="text-sm font-medium text-gray-700 block mb-2">Description</label>
           <textarea
             placeholder="Describe this plan..."
             rows={4}
@@ -43,9 +39,7 @@ export default function PlanForm({ selectedIcon, onIconSelect }: PlanFormProps) 
 
         {/* Start Date */}
         <div>
-          <label className="text-sm font-medium text-gray-700 block mb-2">
-            Start Date
-          </label>
+          <label className="text-sm font-medium text-gray-700 block mb-2">Start Date</label>
           <input
             type="date"
             defaultValue={new Date().toISOString().split("T")[0]}
@@ -55,9 +49,7 @@ export default function PlanForm({ selectedIcon, onIconSelect }: PlanFormProps) 
 
         {/* Cover Icon */}
         <div>
-          <label className="text-sm font-medium text-gray-700 block mb-3">
-            Cover Icon
-          </label>
+          <label className="text-sm font-medium text-gray-700 block mb-3">Cover Icon</label>
           <div className="grid grid-cols-3 gap-3 sm:grid-cols-6">
             {iconOptions.map((option: IconOption) => (
               <button
@@ -71,9 +63,7 @@ export default function PlanForm({ selectedIcon, onIconSelect }: PlanFormProps) 
                 }`}
               >
                 <span className="text-2xl">{option.emoji}</span>
-                <span className="text-xs text-muted-foreground">
-                  {option.label}
-                </span>
+                <span className="text-xs text-muted-foreground">{option.label}</span>
               </button>
             ))}
           </div>

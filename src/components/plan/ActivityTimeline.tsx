@@ -10,9 +10,7 @@ export default function ActivityTimeline({ activities }: ActivityTimelineProps) 
   return (
     <Card className="shadow-sm">
       <CardHeader>
-        <CardTitle className="text-base font-semibold text-natural">
-          Recent Activity
-        </CardTitle>
+        <CardTitle className="text-base font-semibold text-natural">Recent Activity</CardTitle>
       </CardHeader>
       <CardContent>
         {activities.length === 0 ? (
@@ -38,12 +36,8 @@ export default function ActivityTimeline({ activities }: ActivityTimelineProps) 
                   />
                 </div>
                 <div className="flex-1">
-                  <p className="text-sm text-natural">
-                    {activity.description}
-                  </p>
-                  <p className="text-xs text-muted-foreground">
-                    {activity.timestamp}
-                  </p>
+                  <p className="text-sm text-natural">{activity.description}</p>
+                  <p className="text-xs text-muted-foreground">{activity.timestamp}</p>
                 </div>
                 {index < activities.length - 1 && (
                   <div className="absolute ml-4 mt-8 h-4 w-px bg-border" />
