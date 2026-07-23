@@ -6,6 +6,7 @@ import PlanCard from "@/components/home/PlanCard";
 import QuickActionButton from "@/components/home/QuickActionButton";
 import RecentActivityItem from "@/components/home/RecentActivityItem";
 import Summary from "@/components/home/Summary";
+import TopPlan from "@/components/home/TopPlan";
 
 import Link from "next/link";
 
@@ -44,19 +45,7 @@ export default function MainPage() {
       {/* My Plans */}
       <section>
         <h2 className="mb-4 text-lg font-semibold text-natural">My Plans</h2>
-        {hasPlans ? (
-          <div className="grid grid-cols-1 gap-4 md:grid-cols-2 xl:grid-cols-3">
-            {plansData.map((plan) => (
-              <PlanCard key={plan.id} plan={plan} />
-            ))}
-          </div>
-        ) : (
-          <EmptyState
-            title="No Plans Available"
-            description="Create your first plan to start managing shared expenses."
-            actionLabel="Create Plan"
-          />
-        )}
+        <TopPlan />
       </section>
 
       {/* Recent Activity */}

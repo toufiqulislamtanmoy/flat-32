@@ -23,15 +23,15 @@ export default function PlanCard({ plan }: PlanCardProps) {
           </div>
           <div className="rounded-lg bg-login-background px-3 py-2">
             <p className="text-xs text-muted-foreground">Income</p>
-            <p className="text-sm font-semibold text-natural">{plan.monthlyIncome}</p>
+            <p className="text-sm font-semibold text-natural">{plan?.amount}</p>
           </div>
           <div className="rounded-lg bg-login-background px-3 py-2">
             <p className="text-xs text-muted-foreground">Expense</p>
-            <p className="text-sm font-semibold text-natural">{plan.monthlyExpense}</p>
+            <p className="text-sm font-semibold text-natural">{plan?.expanse}</p>
           </div>
           <div className="rounded-lg bg-login-background px-3 py-2">
             <p className="text-xs text-muted-foreground">Transactions</p>
-            <p className="text-sm font-semibold text-natural">{plan.totalTransactions}</p>
+            <p className="text-sm font-semibold text-natural">{plan?.total_transactions}</p>
           </div>
         </div>
         <div className="flex items-center justify-between pt-1">

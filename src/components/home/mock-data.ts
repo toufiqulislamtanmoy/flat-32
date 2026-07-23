@@ -9,9 +9,9 @@ export interface Plan {
   name: string;
   memberCount: number;
   balance: string;
-  monthlyIncome: string;
-  monthlyExpense: string;
-  totalTransactions: number;
+  amount: string;
+  expanse: string;
+  total_transactions: string;
   lastUpdated: string;
 }
 

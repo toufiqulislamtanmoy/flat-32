@@ -15,7 +15,6 @@ const Summary = () => {
     enabled: !!user_data?.user?.id,
   });
 
-  console.log(data);
   if (isLoading)
     return <section className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-4" />;
   if (isError || !data) return null;
