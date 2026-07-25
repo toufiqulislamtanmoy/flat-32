@@ -1,15 +1,62 @@
 "use client";
 
 import { useState } from "react";
-import { Button } from "@/components/ui/button";
+import { useRouter } from "next/navigation";
+import { useAlert } from "@/components/AlertPopUp/AlertPopup";
+import axiosClient from "@/helper/axiosClient";
+import useAuthData from "@/hook/useAuthData";
 import PageHeader from "@/components/create-plan/PageHeader";
 import PlanForm from "@/components/create-plan/PlanForm";
 import PlanPreviewCard from "@/components/create-plan/PlanPreviewCard";
-import InformationCard from "@/components/create-plan/InformationCard";
 import { defaultPreview } from "@/components/create-plan/mock-data";
 
 const CreatePlanPage = () => {
-  const [selectedIcon, setSelectedIcon] = useState(defaultPreview.icon);
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const router = useRouter();
+  const { showMessage } = useAlert();
+  const { user_data } = useAuthData();
+
+  const handleSubmit = async (values: { title: string; date: string }) => {
+    setIsSubmitting(true);
+
+    try {
+      const payload = {
+        title: values.title,
+        date: values.date,
+        user_id: Number(user_data?.user?.id),
+        amount: "0",
+        balance: "0",
+        expanse: "0",
+        status: "active",
+      };
+
+      const response = await axiosClient.post("/plans/create", payload);
+
+      if (response.data?.status === "success") {
+        showMessage("success", "Plan created", "Your new plan is ready to use.");
+        const planId = response.data?.data?.id;
+        if (planId) {
+          router.push(`/plans/${planId}`);
+        } else {
+          router.push("/");
+        }
+      } else {
+        showMessage(
+          "error",
+          "Failed to create plan",
+          response.data?.message || "Please try again."
+        );
+      }
+    } catch {
+      showMessage(
+        "error",
+        "Failed to create plan",
+        "Something went wrong. Please try again."
+      );
+    } finally {
+      setIsSubmitting(false);
+    }
+  };
 
   return (
     <div className="mx-auto space-y-6">
@@ -18,25 +65,13 @@ const CreatePlanPage = () => {
         subtitle="Start managing shared expenses by creating a new plan."
       />
 
-      <PlanForm selectedIcon={selectedIcon} onIconSelect={setSelectedIcon} />
+      <PlanForm onSubmit={handleSubmit} isSubmitting={isSubmitting} />
 
       <PlanPreviewCard
-        icon={selectedIcon}
         name={defaultPreview.name}
-        members={defaultPreview.members}
         balance={defaultPreview.balance}
-        transactions={defaultPreview.transactions}
         startDate={defaultPreview.startDate}
       />
-
-      <InformationCard />
-
-      <div className="flex flex-col gap-3 sm:flex-row">
-        <Button className="h-11 flex-1 cursor-pointer">Create Plan</Button>
-        <Button variant="outline" className="h-11 flex-1 cursor-pointer">
-          Cancel
-        </Button>
-      </div>
     </div>
   );
 };

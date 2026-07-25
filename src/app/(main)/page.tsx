@@ -23,13 +23,8 @@ export default function MainPage() {
         </p>
       </section>
 
-      {/* Summary Cards */}
+      {/* Summary*/}
       <Summary />
-      {/* <section className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-4">
-        {summaryData.map((stat) => (
-          <SummaryCard key={stat.label} value={stat.value} label={stat.label} icon={stat.icon} />
-        ))}
-      </section> */}
 
       {/* Quick Actions */}
       <section className="flex flex-wrap gap-3">
