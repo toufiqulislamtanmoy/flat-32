@@ -3,6 +3,7 @@ import axiosClient from "@/helper/axiosClient";
 import useAuthData from "@/hook/useAuthData";
 import { useQuery } from "@tanstack/react-query";
 import SummaryCard from "./SummaryCard";
+import SummarySkeleton from "./SummarySkeleton";
 
 const Summary = () => {
   const { user_data } = useAuthData();
@@ -15,8 +16,7 @@ const Summary = () => {
     enabled: !!user_data?.user?.id,
   });
 
-  if (isLoading)
-    return <section className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-4" />;
+  if (isLoading) return <SummarySkeleton />;
   if (isError || !data) return null;
 
   return (

@@ -3,6 +3,7 @@ import useAuthData from "@/hook/useAuthData";
 import { useQuery } from "@tanstack/react-query";
 import PlanCard from "./PlanCard";
 import EmptyState from "./EmptyState";
+import PlanCardSkeleton from "./PlanCardSkeleton";
 
 const TopPlan = () => {
   const { user_data } = useAuthData();
@@ -16,9 +17,8 @@ const TopPlan = () => {
     },
     enabled: !!user_data?.user?.id,
   });
-  console.log("plan", data);
 
-  if (isLoading) return <div className="grid grid-cols-1 gap-4 md:grid-cols-2 xl:grid-cols-3" />;
+  if (isLoading) return <PlanCardSkeleton />;
 
   if (!isLoading && !data?.data?.length)
     return (
