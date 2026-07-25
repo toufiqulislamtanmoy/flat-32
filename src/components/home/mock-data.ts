@@ -6,7 +6,7 @@ export interface SummaryStat {
 
 export interface Plan {
   id: number;
-  name: string;
+  title: string;
   memberCount: number;
   balance: string;
   amount: string;

@@ -1,8 +1,6 @@
 "use client";
 
-import EmptyState from "@/components/home/EmptyState";
 import { plansData, recentActivities } from "@/components/home/mock-data";
-import PlanCard from "@/components/home/PlanCard";
 import QuickActionButton from "@/components/home/QuickActionButton";
 import RecentActivityItem from "@/components/home/RecentActivityItem";
 import Summary from "@/components/home/Summary";
