@@ -50,15 +50,6 @@ export interface Activity {
   timestamp: string;
 }
 
-export interface ChatMessage {
-  id: number;
-  sender: string;
-  avatar: string;
-  message: string;
-  timestamp: string;
-  isOwn: boolean;
-}
-
 export const planInfo: PlanInfo = {
   id: 1,
   name: "Bachelor House",
@@ -125,49 +116,6 @@ export const activities: Activity[] = [
     avatar: "https://cdn-icons-png.flaticon.com/512/149/149071.png",
     description: "Tanjim joined the plan",
     timestamp: "5 days ago",
-  },
-];
-
-export const chatMessages: ChatMessage[] = [
-  {
-    id: 1,
-    sender: "Rahim",
-    avatar: "https://cdn-icons-png.flaticon.com/512/149/149071.png",
-    message: "Hey, I added the grocery bill from yesterday.",
-    timestamp: "10:30 AM",
-    isOwn: false,
-  },
-  {
-    id: 2,
-    sender: "You",
-    avatar: "https://cdn-icons-png.flaticon.com/512/149/149071.png",
-    message: "Got it! Thanks for updating.",
-    timestamp: "10:32 AM",
-    isOwn: true,
-  },
-  {
-    id: 3,
-    sender: "Karim",
-    avatar: "https://cdn-icons-png.flaticon.com/512/149/149071.png",
-    message: "The electricity bill is due next week.",
-    timestamp: "11:15 AM",
-    isOwn: false,
-  },
-  {
-    id: 4,
-    sender: "Nusrat",
-    avatar: "https://cdn-icons-png.flaticon.com/512/149/149071.png",
-    message: "I'll pay it on Friday.",
-    timestamp: "11:20 AM",
-    isOwn: false,
-  },
-  {
-    id: 5,
-    sender: "You",
-    avatar: "https://cdn-icons-png.flaticon.com/512/149/149071.png",
-    message: "Perfect, let me know when it's done.",
-    timestamp: "11:22 AM",
-    isOwn: true,
   },
 ];
 
