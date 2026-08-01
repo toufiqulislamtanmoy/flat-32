@@ -17,20 +17,23 @@ export interface FinancialStat {
 
 export interface Transaction {
   id: number;
-  memberName: string;
+  meal_title: string;
+  plan_title: string;
+  member_name: string;
+  details: string;
+  entry_type: "Credit" | "Debit";
   avatar: string;
-  type: "credit" | "debit";
-  category: string;
   amount: string;
   date: string;
 }
 
 export interface Member {
   id: number;
-  name: string;
-  avatar: string;
-  role: string;
-  permission: string;
+  username: string;
+  fullname: string;
+  profile_picture: string;
+  email_address: string;
+  access_level: string;
 }
 
 export interface MonthlyData {
@@ -72,92 +75,6 @@ export const financialStats: FinancialStat[] = [
   { value: "\u09f325,000", label: "Total Income", icon: "\ud83d\udcc8" },
   { value: "\u09f316,500", label: "Total Expense", icon: "\ud83d\udcc9" },
   { value: "82", label: "Total Transactions", icon: "\ud83d\udcca" },
-];
-
-export const transactions: Transaction[] = [
-  {
-    id: 1,
-    memberName: "Rahim",
-    avatar: "https://cdn-icons-png.flaticon.com/512/149/149071.png",
-    type: "credit",
-    category: "Contribution",
-    amount: "\u09f35,000",
-    date: "2 hours ago",
-  },
-  {
-    id: 2,
-    memberName: "Karim",
-    avatar: "https://cdn-icons-png.flaticon.com/512/149/149071.png",
-    type: "debit",
-    category: "Grocery",
-    amount: "\u09f3850",
-    date: "5 hours ago",
-  },
-  {
-    id: 3,
-    memberName: "Nusrat",
-    avatar: "https://cdn-icons-png.flaticon.com/512/149/149071.png",
-    type: "credit",
-    category: "Contribution",
-    amount: "\u09f33,200",
-    date: "Yesterday",
-  },
-  {
-    id: 4,
-    memberName: "Fahim",
-    avatar: "https://cdn-icons-png.flaticon.com/512/149/149071.png",
-    type: "debit",
-    category: "Utilities",
-    amount: "\u09f31,200",
-    date: "Yesterday",
-  },
-  {
-    id: 5,
-    memberName: "Tanjim",
-    avatar: "https://cdn-icons-png.flaticon.com/512/149/149071.png",
-    type: "debit",
-    category: "Internet",
-    amount: "\u09f31,500",
-    date: "2 days ago",
-  },
-];
-
-export const members: Member[] = [
-  {
-    id: 1,
-    name: "Tanmoy",
-    avatar: "https://cdn-icons-png.flaticon.com/512/149/149071.png",
-    role: "Owner",
-    permission: "Full Access",
-  },
-  {
-    id: 2,
-    name: "Rahim",
-    avatar: "https://cdn-icons-png.flaticon.com/512/149/149071.png",
-    role: "Member",
-    permission: "Can Contribute & Record",
-  },
-  {
-    id: 3,
-    name: "Karim",
-    avatar: "https://cdn-icons-png.flaticon.com/512/149/149071.png",
-    role: "Member",
-    permission: "Can Contribute & Record",
-  },
-  {
-    id: 4,
-    name: "Nusrat",
-    avatar: "https://cdn-icons-png.flaticon.com/512/149/149071.png",
-    role: "Member",
-    permission: "Can Contribute Only",
-  },
-  {
-    id: 5,
-    name: "Fahim",
-    avatar: "https://cdn-icons-png.flaticon.com/512/149/149071.png",
-    role: "Member",
-    permission: "Can Contribute & Record",
-  },
 ];
 
 export const monthlyData: MonthlyData = {

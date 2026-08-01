@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import AuthProviders from "@/providers/AuthProviders";
+import StoreProvider from "@/providers/StoreProvider";
 import QueryClientProviderLocal from "@/provider/QueryClientProviderLocal";
 import { AlertProvider } from "@/components/AlertPopUp/AlertPopup";
 import { ModalProvider } from "@/components/shared/modal";
@@ -30,16 +31,18 @@ export default function RootLayout({
   return (
     <html lang="en" className={`${geistSans.variable} ${geistMono.variable} h-full antialiased`}>
       <body className="min-h-full flex flex-col">
-        <AuthProviders>
-          <QueryClientProviderLocal>
-            <AlertProvider>
-              <ModalProvider>
-                {children}
-                <GlobalModal />
-              </ModalProvider>
-            </AlertProvider>
-          </QueryClientProviderLocal>
-        </AuthProviders>
+        <StoreProvider>
+          <AuthProviders>
+            <QueryClientProviderLocal>
+              <AlertProvider>
+                <ModalProvider>
+                  {children}
+                  <GlobalModal />
+                </ModalProvider>
+              </AlertProvider>
+            </QueryClientProviderLocal>
+          </AuthProviders>
+        </StoreProvider>
       </body>
     </html>
   );

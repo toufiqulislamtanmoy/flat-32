@@ -3,6 +3,7 @@
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import type { Plan } from "./mock-data";
+import Link from "next/link";
 
 interface PlanCardProps {
   plan: Plan;
@@ -36,9 +37,7 @@ export default function PlanCard({ plan }: PlanCardProps) {
         </div>
         <div className="flex items-center justify-between pt-1">
           <p className="text-xs text-muted-foreground">Updated {plan.lastUpdated}</p>
-          <Button variant="outline" size="sm">
-            Open Plan
-          </Button>
+          <Link href={`/plans/${plan.id}`}>Open Plan</Link>
         </div>
       </CardContent>
     </Card>
