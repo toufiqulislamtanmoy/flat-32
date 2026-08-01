@@ -10,7 +10,9 @@ import {
   useMarkAsRead,
   useSendMessage,
   type ChatMessage,
+  type MemberPresenceEvent,
   type MessageSentEvent,
+  type RawChatMessage,
   type ReadReceiptEvent,
   type TypingEvent,
 } from "@/lib/chat";
@@ -43,10 +45,9 @@ export default function useChat(planId: string) {
   useEffect(() => {
     if (!planId || !currentUserId) return;
 
-    let isActive = true;
-    const token = typeof window !== "undefined" ? (localStorage.getItem("accessToken") ?? "") : "";
+    const userId = String(currentUserId);
 
-    const handleNewMessage = (rawMessage: ChatMessage) => {
+    const handleNewMessage = (rawMessage: RawChatMessage) => {
       const message = normalizeChatMessage(rawMessage);
       setLiveMessages((prev) => {
         if (prev.some((m) => m.id === message.id)) return prev;
@@ -70,48 +71,52 @@ export default function useChat(planId: string) {
       });
     };
 
-    const handleMessageSent = ({ tempId, message }: MessageSentEvent) => {
-      const normalized = normalizeChatMessage(message);
-      setLiveMessages((prev) => prev.map((m) => (m.id === tempId ? normalized : m)));
+    // message:sent is just a lightweight ack ({tempId, messageId, timestamp}),
+    // not a full message — patch the optimistic entry's id/timestamp in place
+    const handleMessageSent = ({ tempId, messageId, timestamp }: MessageSentEvent) => {
+      setLiveMessages((prev) =>
+        prev.map((m) => (m.id === tempId ? { ...m, id: String(messageId), timestamp } : m))
+      );
     };
 
-    const handleMemberJoin = ({ userId }: { userId: string }) => {
-      setOnlineUserIds((prev) => (prev.has(userId) ? prev : new Set(prev).add(userId)));
+    const handleMemberJoin = ({ userId: joinedUserId }: MemberPresenceEvent) => {
+      const id = String(joinedUserId);
+      setOnlineUserIds((prev) => (prev.has(id) ? prev : new Set(prev).add(id)));
     };
 
-    const handleMemberLeave = ({ userId }: { userId: string }) => {
+    const handleMemberLeave = ({ userId: leftUserId }: MemberPresenceEvent) => {
+      const id = String(leftUserId);
       setOnlineUserIds((prev) => {
-        if (!prev.has(userId)) return prev;
+        if (!prev.has(id)) return prev;
         const next = new Set(prev);
-        next.delete(userId);
+        next.delete(id);
         return next;
       });
     };
 
-    const handleTyping = ({ userId, isTyping }: TypingEvent) => {
-      if (userId === currentUserId) return;
+    const handleTyping = ({ userId: typingUserId, isTyping }: TypingEvent) => {
+      const id = String(typingUserId);
+      if (id === userId) return;
       setTypingUsers((prev) => {
-        if (isTyping) return prev.includes(userId) ? prev : [...prev, userId];
-        return prev.filter((id) => id !== userId);
+        if (isTyping) return prev.includes(id) ? prev : [...prev, id];
+        return prev.filter((existing) => existing !== id);
       });
     };
 
     const handleReadReceipt = ({ messageId }: ReadReceiptEvent) => {
-      setLiveMessages((prev) => prev.map((m) => (m.id === messageId ? { ...m, isRead: true } : m)));
+      const id = String(messageId);
+      setLiveMessages((prev) => prev.map((m) => (m.id === id ? { ...m, isRead: true } : m)));
     };
 
     const handleError = () => {
       showMessage("error", "Chat error", "Something went wrong with the chat connection.");
     };
 
-    chatSocket
-      .connect(planId, token)
-      .then(() => {
-        if (isActive) setIsConnected(true);
-      })
-      .catch(() => {
-        if (isActive) setIsConnected(false);
-      });
+    const unsubscribeStatus = chatSocket.onStatusChange(setIsConnected);
+
+    chatSocket.connect(planId, userId).catch(() => {
+      // connection status is reported via onStatusChange; nothing else to do here
+    });
 
     chatSocket.on("message:new", handleNewMessage);
     chatSocket.on("message:sent", handleMessageSent);
@@ -122,7 +127,7 @@ export default function useChat(planId: string) {
     chatSocket.on("error", handleError);
 
     return () => {
-      isActive = false;
+      unsubscribeStatus();
       chatSocket.off("message:new", handleNewMessage);
       chatSocket.off("message:sent", handleMessageSent);
       chatSocket.off("member:join", handleMemberJoin);
@@ -200,10 +205,11 @@ export default function useChat(planId: string) {
 
   const markAsRead = useCallback(
     (messageId: string) => {
+      if (!currentUserId) return;
       chatSocket.markRead(messageId);
-      markReadMutation.mutate({ planId, messageId });
+      markReadMutation.mutate({ planId, userId: String(currentUserId), messageId });
     },
-    [planId, markReadMutation]
+    [planId, currentUserId, markReadMutation]
   );
 
   const unreadCount = useMemo(
