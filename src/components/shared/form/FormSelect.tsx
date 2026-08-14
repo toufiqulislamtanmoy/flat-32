@@ -39,6 +39,7 @@ export default function FormSelect({
     <div className="space-y-2">
       {label ? <Label htmlFor={name}>{label}</Label> : null}
       <Select
+        items={options}
         value={field.value || undefined}
         onValueChange={(value) => {
           setFieldValue(name, value);

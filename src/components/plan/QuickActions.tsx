@@ -32,15 +32,15 @@ export default function QuickActions() {
         className="gap-2"
         onClick={() =>
           openModal({
-            title: "Invite Member",
-            description: "Send an invitation to join this plan.",
+            title: "Add Member",
+            description: "Add an existing Flat Mate user to this plan.",
             content: <InviteMemberForm />,
             className: "sm:max-w-md",
           })
         }
       >
         <User />
-        Invite Members
+        Add Member
       </Button>
       <Button variant="outline" className="gap-2">
         <ChartBar />
