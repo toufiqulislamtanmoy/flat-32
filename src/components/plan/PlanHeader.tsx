@@ -99,7 +99,7 @@ export default function PlanHeader() {
               {getStatusIcon(plan.status)}
             </div>
             <div>
-              <h1 className="text-xl font-bold text-natural">{plan.title}</h1>
+              <h1 className="text-xl font-bold text-natural">{plan.name}</h1>
               <p className="mt-1 text-sm text-muted-foreground">Started {formatDate(plan.date)}</p>
               <div className="mt-2 flex flex-wrap items-center gap-3 text-xs text-muted-foreground">
                 <span
