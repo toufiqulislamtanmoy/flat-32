@@ -6,8 +6,11 @@ export interface SummaryStat {
 
 export interface Plan {
   id: number;
-  title: string;
+  name: string;
   memberCount: number;
+  monthlyIncome: string;
+  monthlyExpense: string;
+  totalTransactions: number;
   balance: string;
   amount: string;
   expanse: string;
@@ -38,6 +41,9 @@ export const plansData: Plan[] = [
     monthlyExpense: "৳16,500",
     totalTransactions: 82,
     lastUpdated: "2 hours ago",
+    amount: "৳25,000",
+    expanse: "৳16,500",
+    total_transactions: "82",
   },
   {
     id: 2,
@@ -48,6 +54,9 @@ export const plansData: Plan[] = [
     monthlyExpense: "৳34,250",
     totalTransactions: 156,
     lastUpdated: "5 hours ago",
+    amount: "৳40,000",
+    expanse: "৳34,250",
+    total_transactions: "156",
   },
   {
     id: 3,
@@ -58,6 +67,9 @@ export const plansData: Plan[] = [
     monthlyExpense: "৳56,000",
     totalTransactions: 24,
     lastUpdated: "Yesterday",
+    amount: "৳60,000",
+    expanse: "৳56,000",
+    total_transactions: "24",
   },
 ];
 

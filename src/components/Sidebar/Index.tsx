@@ -1,10 +1,9 @@
 "use client";
 
+import { plansData } from "@/components/home/mock-data";
+import { Home, LayoutDashboard, Plane, Plus, Settings, UtensilsCrossed, X } from "lucide-react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { LayoutDashboard, Plus, Settings, X, Home, UtensilsCrossed, Plane } from "lucide-react";
-import { Button } from "@/components/ui/button";
-import { plansData } from "@/components/home/mock-data";
 
 interface SidebarProps {
   isOpen: boolean;
