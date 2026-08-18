@@ -3,7 +3,7 @@
 import { Card, CardContent } from "@/components/ui/card";
 
 interface SummaryCardProps {
-  value: string;
+  value: number;
   label: string;
   prefix?: string;
 }

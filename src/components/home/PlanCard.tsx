@@ -13,7 +13,7 @@ export default function PlanCard({ plan }: PlanCardProps) {
   return (
     <Card className="shadow-sm transition-shadow hover:shadow-md">
       <CardHeader>
-        <CardTitle className="text-lg font-semibold text-natural">{plan.title}</CardTitle>
+        <CardTitle className="text-lg font-semibold text-natural">{plan.name}</CardTitle>
         <p className="text-sm text-muted-foreground">{plan.memberCount} Members</p>
       </CardHeader>
       <CardContent className="space-y-3">
