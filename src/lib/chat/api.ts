@@ -64,6 +64,8 @@ export function useSendMessage() {
     },
     onSuccess: (_data, { planId }) => {
       queryClient.invalidateQueries({ queryKey: ["CHAT_MESSAGES", planId] });
+      // Keep in sync with PLAN_ACTIVITIES_QUERY_KEY in components/plan/ActivityTimeline
+      queryClient.invalidateQueries({ queryKey: ["PLAN_ACTIVITIES", String(planId)] });
     },
   });
 }

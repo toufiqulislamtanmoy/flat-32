@@ -2,7 +2,7 @@
 
 import ActivityTimeline from "@/components/plan/ActivityTimeline";
 import MembersPreview from "@/components/plan/MembersPreview";
-import { activities, monthlyData } from "@/components/plan/mock-data";
+import { monthlyData } from "@/components/plan/mock-data";
 import MonthlySummary from "@/components/plan/MonthlySummary";
 import PlanHeader from "@/components/plan/PlanHeader";
 import QuickActions from "@/components/plan/QuickActions";
@@ -22,7 +22,7 @@ export default function PlanDetailsPage() {
 
       <MonthlySummary data={monthlyData} />
 
-      <ActivityTimeline activities={activities} />
+      <ActivityTimeline />
     </div>
   );
 }

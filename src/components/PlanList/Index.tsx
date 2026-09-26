@@ -4,7 +4,11 @@ import axiosClient from "@/helper/axiosClient";
 import useAuthData from "@/hook/useAuthData";
 import { useQuery } from "@tanstack/react-query";
 import Image from "next/image";
+import Link from "next/link";
 import React, { useMemo } from "react";
+
+// Invalidate this key after creating/updating a plan so the list refreshes
+export const USER_PLAN_QUERY_KEY = "USER_PLAN";
 
 type PlanItem = {
   id: number;
@@ -47,7 +51,7 @@ const PlanList = () => {
   const { user_data } = useAuthData();
 
   const { data, isLoading, isError } = useQuery({
-    queryKey: ["USER_PLAN", user_data?.user?.id],
+    queryKey: [USER_PLAN_QUERY_KEY, user_data?.user?.id],
     queryFn: async () => {
       const response = await axiosClient.post("/plans/user-plans", {
         user_id: user_data?.user?.id,
@@ -114,9 +118,10 @@ const PlanList = () => {
             const statusClass = statusStyles[statusKey] || statusStyles.default;
 
             return (
-              <article
+              <Link
                 key={plan.id}
-                className="overflow-hidden rounded-[24px] border border-slate-200 bg-white shadow-sm transition duration-200 hover:-translate-y-1 hover:shadow-lg"
+                href={`/plans/${plan.id}`}
+                className="block overflow-hidden rounded-[24px] border border-slate-200 bg-white shadow-sm transition duration-200 hover:-translate-y-1 hover:shadow-lg"
               >
                 <div className="flex items-start gap-4 border-b border-slate-100 bg-gradient-to-br from-white via-slate-50 to-primary/5 p-5">
                   <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-2xl bg-primary/10 text-xl">
@@ -151,7 +156,10 @@ const PlanList = () => {
                     <div className="flex items-center gap-3">
                       <div className="relative h-11 w-11 overflow-hidden rounded-full border border-slate-200">
                         <Image
-                          src={plan.profile_picture || "/assets/signin_banner.PNG"}
+                          src={
+                            plan.profile_picture ||
+                            "https://cdn-icons-png.flaticon.com/512/149/149071.png"
+                          }
                           alt={plan.fullname || plan.username || "Plan owner"}
                           fill
                           className="object-cover"
@@ -170,7 +178,7 @@ const PlanList = () => {
                     </div>
                   </div>
                 </div>
-              </article>
+              </Link>
             );
           })}
         </div>

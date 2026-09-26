@@ -1,3 +1,9 @@
+import type { Metadata } from "next";
+export const metadata: Metadata = {
+  title: "Reset password",
+  description: "Choose a new password for your Flat Mate account.",
+};
+
 const ResetPasswordPage = () => {
   return (
     <div className="flex min-h-screen items-center justify-center bg-login-background px-4 py-10">

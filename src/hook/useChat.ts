@@ -16,11 +16,13 @@ import {
   type ReadReceiptEvent,
   type TypingEvent,
 } from "@/lib/chat";
+import { useQueryClient } from "@tanstack/react-query";
 import { useCallback, useEffect, useMemo, useState } from "react";
 
 export default function useChat(planId: string) {
   const { user_data } = useAuthData();
   const { showMessage } = useAlert();
+  const queryClient = useQueryClient();
   const currentUserId = user_data?.user?.id;
 
   const {
@@ -47,8 +49,14 @@ export default function useChat(planId: string) {
 
     const userId = String(currentUserId);
 
+    // New chat messages are plan activity too — refetch the timeline for everyone in the plan
+    // (key kept in sync with PLAN_ACTIVITIES_QUERY_KEY in components/plan/ActivityTimeline)
+    const refreshPlanActivities = () =>
+      queryClient.invalidateQueries({ queryKey: ["PLAN_ACTIVITIES", String(planId)] });
+
     const handleNewMessage = (rawMessage: RawChatMessage) => {
       const message = normalizeChatMessage(rawMessage);
+      refreshPlanActivities();
       setLiveMessages((prev) => {
         if (prev.some((m) => m.id === message.id)) return prev;
 
@@ -74,6 +82,7 @@ export default function useChat(planId: string) {
     // message:sent is just a lightweight ack ({tempId, messageId, timestamp}),
     // not a full message — patch the optimistic entry's id/timestamp in place
     const handleMessageSent = ({ tempId, messageId, timestamp }: MessageSentEvent) => {
+      refreshPlanActivities();
       setLiveMessages((prev) =>
         prev.map((m) => (m.id === tempId ? { ...m, id: String(messageId), timestamp } : m))
       );
@@ -139,7 +148,7 @@ export default function useChat(planId: string) {
       setIsConnected(false);
       setTypingUsers([]);
     };
-  }, [planId, currentUserId, showMessage]);
+  }, [planId, currentUserId, showMessage, queryClient]);
 
   const messages = useMemo(() => {
     // drop optimistic entries once the real (persisted) message has arrived via

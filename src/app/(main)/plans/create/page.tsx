@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import { useRouter } from "next/navigation";
+import { useQueryClient } from "@tanstack/react-query";
 import { useAlert } from "@/components/AlertPopUp/AlertPopup";
 import axiosClient from "@/helper/axiosClient";
 import useAuthData from "@/hook/useAuthData";
@@ -9,12 +10,14 @@ import PageHeader from "@/components/create-plan/PageHeader";
 import PlanForm from "@/components/create-plan/PlanForm";
 import PlanPreviewCard from "@/components/create-plan/PlanPreviewCard";
 import { defaultPreview } from "@/components/create-plan/mock-data";
+import { USER_PLAN_QUERY_KEY } from "@/components/PlanList/Index";
 
 const CreatePlanPage = () => {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const router = useRouter();
   const { showMessage } = useAlert();
   const { user_data } = useAuthData();
+  const queryClient = useQueryClient();
 
   const handleSubmit = async (values: { title: string; date: string }) => {
     setIsSubmitting(true);
@@ -34,6 +37,7 @@ const CreatePlanPage = () => {
 
       if (response.data?.status === "success") {
         showMessage("success", "Plan created", "Your new plan is ready to use.");
+        queryClient.invalidateQueries({ queryKey: [USER_PLAN_QUERY_KEY] });
         const planId = response.data?.data?.id;
         if (planId) {
           router.push(`/plans/${planId}`);
@@ -48,11 +52,7 @@ const CreatePlanPage = () => {
         );
       }
     } catch {
-      showMessage(
-        "error",
-        "Failed to create plan",
-        "Something went wrong. Please try again."
-      );
+      showMessage("error", "Failed to create plan", "Something went wrong. Please try again.");
     } finally {
       setIsSubmitting(false);
     }

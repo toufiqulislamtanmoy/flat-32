@@ -6,6 +6,8 @@ import { useAlert } from "@/components/AlertPopUp/AlertPopup";
 import axiosClient from "@/helper/axiosClient";
 import useAuthData from "@/hook/useAuthData";
 import { useQueryClient } from "@tanstack/react-query";
+import { RECENT_ACTIVITIES_QUERY_KEY } from "@/components/home/RecentActivity";
+import { PLAN_ACTIVITIES_QUERY_KEY } from "@/components/plan/ActivityTimeline";
 import { Form, Formik, type FormikHelpers } from "formik";
 import { useParams } from "next/navigation";
 import * as Yup from "yup";
@@ -78,6 +80,8 @@ export default function AddTransactionForm() {
         resetForm();
         queryClient.invalidateQueries({ queryKey: ["PLAN", planId, user_data?.user?.id] });
         queryClient.invalidateQueries({ queryKey: ["PLAN_TRANSACTIONS"] });
+        queryClient.invalidateQueries({ queryKey: [RECENT_ACTIVITIES_QUERY_KEY] });
+        queryClient.invalidateQueries({ queryKey: [PLAN_ACTIVITIES_QUERY_KEY, String(planId)] });
         closeModal();
       } else {
         showMessage(

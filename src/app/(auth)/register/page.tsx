@@ -1,6 +1,13 @@
+import type { Metadata } from "next";
 import RegisterForm from "@/components/Auth/Register/RegisterForm";
 import Image from "next/image";
 import Link from "next/link";
+
+export const metadata: Metadata = {
+  title: "Create account",
+  description:
+    "Create your Flat Mate account and start sharing flat expenses, meals and balances with your flatmates.",
+};
 
 const RegisterPage = () => {
   return (

@@ -5,8 +5,8 @@ import { signOut } from "next-auth/react";
 import Image from "next/image";
 import Link from "next/link";
 import { useState, useRef, useEffect, useCallback } from "react";
-import { LayoutDashboard, Search, Bell, Menu, LogOut, ChevronDown } from "lucide-react";
-import { Button } from "@/components/ui/button";
+import { Search, Bell, Menu, LogOut, ChevronDown } from "lucide-react";
+import { BrandMark } from "@/components/shared/BrandLogo";
 
 interface NavbarProps {
   onMenuToggle: () => void;
@@ -33,7 +33,7 @@ const Navbar = ({ onMenuToggle }: NavbarProps) => {
   };
 
   const handleLogout = () => {
-    signOut();
+    signOut({ redirectTo: "/login" });
     setIsProfileOpen(false);
   };
 
@@ -74,9 +74,7 @@ const Navbar = ({ onMenuToggle }: NavbarProps) => {
             <Menu className="h-5 w-5" />
           </button>
           <Link href="/" className="flex items-center gap-2.5">
-            <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-primary">
-              <LayoutDashboard className="h-4 w-4 text-primary-foreground" />
-            </div>
+            <BrandMark className="h-8 w-8" />
             <span className="text-lg font-bold text-natural hidden sm:inline">Flat Mate</span>
           </Link>
         </div>

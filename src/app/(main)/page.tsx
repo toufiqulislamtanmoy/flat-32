@@ -1,8 +1,8 @@
 "use client";
 
-import { plansData, recentActivities } from "@/components/home/mock-data";
+import { plansData } from "@/components/home/mock-data";
 import QuickActionButton from "@/components/home/QuickActionButton";
-import RecentActivityItem from "@/components/home/RecentActivityItem";
+import RecentActivity from "@/components/home/RecentActivity";
 import Summary from "@/components/home/Summary";
 import TopPlan from "@/components/home/TopPlan";
 
@@ -44,17 +44,7 @@ export default function MainPage() {
       {/* Recent Activity */}
       <section>
         <h2 className="mb-4 text-lg font-semibold text-natural">Recent Activity</h2>
-        <div className="rounded-2xl border border-border bg-white p-4 shadow-sm">
-          <div className="space-y-4">
-            {recentActivities.map((activity) => (
-              <RecentActivityItem
-                key={activity.id}
-                description={activity.description}
-                timestamp={activity.timestamp}
-              />
-            ))}
-          </div>
-        </div>
+        <RecentActivity />
       </section>
     </div>
   );

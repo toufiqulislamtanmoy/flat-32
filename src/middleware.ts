@@ -16,7 +16,9 @@ export default auth((req) => {
 
   if (isAuthPage) {
     if (isAuth) {
-      return Response.redirect(new URL("/", req.nextUrl));
+      const from = req.nextUrl.searchParams.get("from");
+      const target = from && from.startsWith("/") && !from.startsWith("//") ? from : "/";
+      return Response.redirect(new URL(target, req.nextUrl));
     }
     return;
   }
@@ -31,5 +33,8 @@ export default auth((req) => {
   }
 });
 export const config = {
-  matcher: ["/((?!api|_next/static|_next/image|.*\\.png$).*)"],
+  // Skip API, Next internals, metadata icons and any static file (e.g. .png, .svg, .ico)
+  matcher: [
+    "/((?!api|_next/static|_next/image|icon|apple-icon|favicon|.*\\.(?:png|jpe?g|gif|svg|ico|webp|avif)$).*)",
+  ],
 };
